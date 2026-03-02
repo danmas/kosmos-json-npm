@@ -1,0 +1,5 @@
+{
+  "name": "Super JSON Editor",
+  "description": "A beautiful, dense, and efficient JSON editor with a tree view, syntax highlighting, and real-time validation.",
+  "requestFramePermissions": []
+}
