@@ -1,6 +1,10 @@
 import React from 'react';
-import { ChevronRight, ChevronDown, Server, Key } from 'lucide-react';
+import { ChevronRight, ChevronDown, Server, Key, Lock, GitBranch, Terminal, Database, Box, Layers, Settings, FileJson, LucideIcon } from 'lucide-react';
 import type { TreeMapping, BranchConfig } from '../types';
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Server, Key, Lock, GitBranch, Terminal, Database, Box, Layers, Settings, FileJson
+};
 
 interface JsonTreeProps {
   jsonText: string;
@@ -25,6 +29,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({ data, config, path, onNodeClick, de
   const label = config.label;
   const displayKey = config.displayKey;
 
+  const Icon = (config.icon && ICON_MAP[config.icon]) || Server;
+
   return (
     <div className="pl-4">
       <div
@@ -35,7 +41,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ data, config, path, onNodeClick, de
         }}
       >
         {items.length > 0 && (expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
-        <Server size={14} className="text-blue-400" />
+        <Icon size={14} className="text-blue-400" />
         <span className="font-medium text-zinc-300">{label}</span>
         <span className="text-xs text-zinc-500">({items.length})</span>
       </div>
@@ -54,12 +60,15 @@ const TreeNode: React.FC<TreeNodeProps> = ({ data, config, path, onNodeClick, de
                     onNodeClick(currentPath.join('.'));
                   }}
                 >
-                  <Key size={13} className="text-emerald-400" />
+                  {(() => {
+                    const ItemIcon = (config.itemIcon && ICON_MAP[config.itemIcon]) || Key;
+                    return <ItemIcon size={13} className="text-emerald-400" />;
+                  })()}
                   <span className="text-zinc-400">{nodeLabel}</span>
                 </div>
 
                 {/* Рекурсия для детей */}
-                {config.children.map((childConfig) => {
+                {config.children?.map((childConfig) => {
                   const childData = item[childConfig.key];
                   if (!childData) return null;
                   return (
@@ -88,11 +97,13 @@ export const JsonTree: React.FC<JsonTreeProps> = ({ jsonText, mapping, onNodeCli
     parsed = JSON.parse(jsonText);
   } catch { }
 
+  const RootIcon = (mapping.rootIcon && ICON_MAP[mapping.rootIcon]) || Server;
+
   return (
     <div className="h-full overflow-auto text-sm bg-zinc-950 p-2 font-mono select-none">
       <div className="flex items-center gap-2 py-1 px-2 text-zinc-400 border-b border-zinc-800 mb-2">
-        <Server size={16} />
-        {mapping.rootLabel}
+        <RootIcon size={16} />
+        {mapping.rootLabel || 'Root'}
       </div>
 
       {mapping.branches.map((branch) => {

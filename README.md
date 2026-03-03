@@ -1,20 +1,55 @@
+# @roman.eremeev/kosmos-json-npm (v1.0.1)
+
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+<img width="1200" height="475" alt="Super JSON Editor Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+**SuperJsonEditor** — это современный и мощный React-компонент для редактирования JSON, обладающий интерактивным деревом навигации, поддержкой гибких схем (tree-mapping) и интеллектуальной синхронизацией прокрутки.
 
-This contains everything you need to run your app locally.
+## ✨ Основные возможности
 
-View your app in AI Studio: https://ai.studio/apps/559b7b7a-be5c-44f4-af6c-a42f28271368
+- 🚀 **CodeMirror 6**: Быстрый и отзывчивый редактор в правой панели.
+- 🌳 **Динамическое дерево**: Левая панель отображает структуру JSON согласно вашему маппингу с поддержкой кастомных иконок.
+- 🔗 **Синхронизация скролла**: Клик на узел в дереве мгновенно переносит фокус в соответствующую строку редактора.
+- ✅ **Валидация**: Автоматическая проверка синтаксиса JSON и соответствия структуре маппинга.
+- 🛠️ **Edit Mapping Mode**: Встроенный режим редактирования самого маппинга прямо внутри компонента.
+- 🌓 **Премиальный UI**: Темная тема "из коробки" с плавными переходами и микро-анимациями.
 
-## Run Locally
+## 📦 Установка
 
-**Prerequisites:**  Node.js
+```bash
+npm install @roman.eremeev/kosmos-json-npm
+```
 
+## 🚀 Быстрый старт
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```tsx
+import { SuperJsonEditor } from '@roman.eremeev/kosmos-json-npm';
+import '@roman.eremeev/kosmos-json-npm/style.css'; 
+
+function App() {
+  return (
+    <div style={{ height: '100vh', width: '100%' }}>
+      <SuperJsonEditor 
+        defaultValue='{ "servers": [] }'
+        onSave={(json) => console.log("Data saved:", json)}
+      />
+    </div>
+  );
+}
+```
+
+## 📚 Документация
+
+Подробную спецификацию пропсов и руководство по настройке маппинга читайте в [**README_kosmos-json-npm_usage.md**](./README_kosmos-json-npm_usage.md).
+
+## 🛠️ Разработка (Локально)
+
+1. Клонируйте репозиторий.
+2. Установите зависимости: `npm install`.
+3. Запустите dev-сервер: `npm run dev`.
+4. Сборка пакета: `npm run build`.
+
+---
+[GitHub](https://github.com/danmas) • [NPM](https://www.npmjs.com/~roman.eremeev)  
+Автор: **Roman Eremeev**
