@@ -1,7 +1,7 @@
 {
   "name": "@roman.eremeev/kosmos-json-npm",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.5",
   "type": "module",
   "description": "Super JSON Editor with tree mapping support",
   "main": "dist/super-json-editor.umd.js",
@@ -13,7 +13,7 @@
       "import": "./dist/super-json-editor.es.js",
       "require": "./dist/super-json-editor.umd.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/kosmos-json-npm.css"
   },
   "files": [
     "dist"

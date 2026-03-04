@@ -13,6 +13,7 @@ export interface SuperJsonEditorProps {
     defaultValue?: string;
     onChange?: (json: string) => void;
     onSave?: (json: string) => void;
+    onMappingSave?: (mapping: TreeMapping) => void;
     className?: string;
 }
 
@@ -35,6 +36,7 @@ export const SuperJsonEditor: React.FC<SuperJsonEditorProps> = ({
     defaultValue = '{\n  "hello": "world"\n}',
     onChange,
     onSave,
+    onMappingSave,
     className = ''
 }) => {
     const [internalJsonText, setInternalJsonText] = useState(defaultValue);
@@ -158,6 +160,9 @@ export const SuperJsonEditor: React.FC<SuperJsonEditorProps> = ({
             try {
                 const parsed = JSON.parse(mappingText);
                 setMapping(parsed);
+                if (onMappingSave) {
+                    onMappingSave(parsed);
+                }
                 setIsEditingMapping(false);
             } catch (e) {
                 alert('Невозможно сохранить: невалидный JSON маппинга');
@@ -176,20 +181,37 @@ export const SuperJsonEditor: React.FC<SuperJsonEditorProps> = ({
         }
     };
 
-    const loadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleLoadJson = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = (ev) => {
             const result = ev.target?.result as string;
-            if (isEditingMapping) {
-                setMappingText(result);
+            if (onChange) {
+                onChange(result);
             } else {
-                if (onChange) {
-                    onChange(result);
+                setInternalJsonText(result);
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    const handleLoadMapping = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            const result = ev.target?.result as string;
+            try {
+                const data = JSON.parse(result);
+                if (isEditingMapping) {
+                    setMappingText(result);
                 } else {
-                    setInternalJsonText(result);
+                    setMapping(data);
+                    setMappingText(result);
                 }
+            } catch (err) {
+                alert('Ошибка при загрузке маппинга: невалидный JSON');
             }
         };
         reader.readAsText(file);
@@ -215,7 +237,7 @@ export const SuperJsonEditor: React.FC<SuperJsonEditorProps> = ({
     }
 
     return (
-        <div className={`h-full w-full bg-zinc-950 text-zinc-200 flex flex-col overflow-hidden ${className}`}>
+        <div className={`sje-container h-full w-full bg-zinc-950 text-zinc-200 flex flex-col overflow-hidden ${className}`}>
             {/* Header */}
             <div className="h-12 border-b border-zinc-800 flex items-center px-4 justify-between bg-zinc-900 shrink-0">
                 <div className="flex items-center gap-3">
@@ -235,10 +257,22 @@ export const SuperJsonEditor: React.FC<SuperJsonEditorProps> = ({
                         <Settings size={14} /> Edit Mapping
                     </button>
 
-                    <label className="cursor-pointer flex items-center gap-2 px-3 py-1 bg-zinc-800 hover:bg-zinc-700 rounded text-xs transition-colors">
-                        <input type="file" accept=".json" onChange={loadFile} className="hidden" />
-                        Загрузить
-                    </label>
+                    <div className="flex items-center gap-2 bg-zinc-800/50 p-1 rounded-md border border-zinc-800">
+                        <label className="cursor-pointer flex items-center gap-2 px-3 py-1 hover:bg-zinc-700 rounded text-xs transition-colors" title="Загрузить файл маппинга (.json)">
+                            <input type="file" accept=".json" onChange={handleLoadMapping} className="hidden" />
+                            <Settings size={14} className="text-blue-400" />
+                            Загрузить маппинг
+                        </label>
+
+                        <div className="w-px h-4 bg-zinc-700 mx-1" />
+
+                        <label className="cursor-pointer flex items-center gap-2 px-3 py-1 hover:bg-zinc-700 rounded text-xs transition-colors" title="Загрузить редактируемый JSON">
+                            <input type="file" accept=".json" onChange={handleLoadJson} className="hidden" />
+                            <FileJson size={14} className="text-emerald-400" />
+                            Загрузить JSON
+                        </label>
+                    </div>
+
                     <button
                         onClick={saveFile}
                         className={`flex items-center gap-2 px-3 py-1 rounded text-xs font-medium transition-colors ${isEditingMapping ? 'bg-blue-600 hover:bg-blue-500' : 'bg-emerald-600 hover:bg-emerald-500'

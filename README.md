@@ -1,4 +1,4 @@
-# @roman.eremeev/kosmos-json-npm (v1.0.1)
+# @roman.eremeev/kosmos-json-npm (v1.0.5)
 
 <div align="center">
 <img width="1200" height="475" alt="Super JSON Editor Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
@@ -14,6 +14,7 @@
 - ✅ **Валидация**: Автоматическая проверка синтаксиса JSON и соответствия структуре маппинга.
 - 🛠️ **Edit Mapping Mode**: Встроенный режим редактирования самого маппинга прямо внутри компонента.
 - 🌓 **Премиальный UI**: Темная тема "из коробки" с плавными переходами и микро-анимациями.
+- 🔒 **Изолированные стили**: Компонент использует уникальный контейнер `sje-container` для изоляции стилей и предотвращения конфликтов.
 
 ## 📦 Установка
 
@@ -25,7 +26,7 @@ npm install @roman.eremeev/kosmos-json-npm
 
 ```tsx
 import { SuperJsonEditor } from '@roman.eremeev/kosmos-json-npm';
-import '@roman.eremeev/kosmos-json-npm/style.css'; 
+import '@roman.eremeev/kosmos-json-npm/style.css';
 
 function App() {
   return (
@@ -36,6 +37,23 @@ function App() {
       />
     </div>
   );
+}
+```
+
+## 🎨 Кастомизация темы
+
+Компонент поддерживает CSS-переменные для настройки цветовой схемы:
+
+```css
+:root {
+  --kpj-bg-primary: #09090b;      /* Основной фон */
+  --kpj-bg-secondary: #18181b;    /* Вторичный фон */
+  --kpj-bg-hover: #27272a;        /* Фон при наведении */
+  --kpj-border-color: #27272a;    /* Цвет границ */
+  --kpj-text-primary: #e4e4e7;    /* Основной текст */
+  --kpj-text-secondary: #a1a1aa;  /* Вторичный текст */
+  --kpj-accent-green: #10b981;    /* Акцентный зелёный */
+  --kpj-accent-blue: #3b82f6;     /* Акцентный синий */
 }
 ```
 

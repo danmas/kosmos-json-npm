@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+/* CSS Variables for theme customization */
+:root {
+  --kpj-bg-primary: #09090b;      /* zinc-950 */
+  --kpj-bg-secondary: #18181b;    /* zinc-900 */
+  --kpj-bg-hover: #27272a;        /* zinc-800 */
+  --kpj-border-color: #27272a;    /* zinc-800 */
+  --kpj-text-primary: #e4e4e7;    /* zinc-200 */
+  --kpj-text-secondary: #a1a1aa;  /* zinc-400 */
+  --kpj-text-muted: #71717a;      /* zinc-500 */
+  --kpj-accent-green: #10b981;    /* emerald-500 */
+  --kpj-accent-green-hover: #34d399; /* emerald-400 */
+  --kpj-accent-blue: #3b82f6;     /* blue-500 */
+  --kpj-accent-blue-hover: #60a5fa;  /* blue-400 */
+  --kpj-accent-red: #f87171;      /* red-400 */
+}
